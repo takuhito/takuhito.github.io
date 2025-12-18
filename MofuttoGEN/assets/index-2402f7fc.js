@@ -94,7 +94,11 @@ ${e}
       "imagePrompt": "4枚目の画像プロンプト"
     }
   ]
-}`}]}],generationConfig:{temperature:.7,topP:.95,topK:40,responseMimeType:"application/json"}})});if(!n.ok){const l=await n.text();throw new Error(`シナリオ解析エラー: ${n.statusText} - ${l}`)}const i=(await n.json()).candidates[0].content.parts[0].text,o=JSON.parse(i);return{title:o.title||"",panels:o.panels.map(l=>({id:l.id,storyText:l.storyText||"",imagePrompt:l.imagePrompt||"",imageUrl:"",audioUrl:""}))}}const Qc="https://www.googleapis.com/drive/v3";async function Uh(e,t,n){var l,s,u,h,v;const r=`name='${t}' and parents in '${e}' and mimeType='application/vnd.google-apps.folder' and trashed=false`,i=await fetch(`${Qc}/files?q=${encodeURIComponent(r)}`,{headers:{Authorization:`Bearer ${n}`}});if(!i.ok){const w=await i.text();let y={};try{y=JSON.parse(w)}catch{}const p=((l=y.error)==null?void 0:l.message)||w||i.statusText,_=((h=(u=(s=y.error)==null?void 0:s.errors)==null?void 0:u[0])==null?void 0:h.message)||"";if(i.status===403&&p.includes("has not been used")||p.includes("is disabled")){const d=((v=p.match(/project (\d+)/))==null?void 0:v[1])||"unknown";throw new Error(`Google Drive APIが有効化されていません。
+}`}]}],generationConfig:{temperature:.7,topP:.95,topK:40,responseMimeType:"application/json"}})});if(!n.ok){const l=await n.text();throw new Error(`シナリオ解析エラー: ${n.statusText} - ${l}`)}const i=(await n.json()).candidates[0].content.parts[0].text,o=JSON.parse(i);return{title:o.title||"",panels:o.panels.map(l=>({id:l.id,storyText:l.storyText||"",imagePrompt:l.imagePrompt||"",imageUrl:"",audioUrl:""}))}}const Qc="https://www.googleapis.com/drive/v3";async function Uh(e,t,n){var l,s,u,h,v;const r=`name='${t}' and parents in '${e}' and mimeType='application/vnd.google-apps.folder' and trashed=false`,i=await fetch(`${Qc}/files?q=${encodeURIComponent(r)}`,{headers:{Authorization:`Bearer ${n}`}});if(!i.ok){const w=await i.text();let y={};try{y=JSON.parse(w)}catch{}const p=((l=y.error)==null?void 0:l.message)||w||i.statusText,_=((h=(u=(s=y.error)==null?void 0:s.errors)==null?void 0:u[0])==null?void 0:h.message)||"";if(i.status===401){localStorage.removeItem("drive_access_token");localStorage.removeItem("drive_token_expiry");throw new Error(`保存エラー: Google認証が無効になりました。
+もう一度「Google認証」を実行してください。
+
+Parent Folder ID: ${e}
+Folder Name: ${t}`)}if(i.status===403&&p.includes("has not been used")||p.includes("is disabled")){const d=((v=p.match(/project (\d+)/))==null?void 0:v[1])||"unknown";throw new Error(`Google Drive APIが有効化されていません。
 
 以下の手順でGoogle Drive APIを有効化してください：
 1. Google Cloud Consoleにアクセス
